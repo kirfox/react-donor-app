@@ -11,7 +11,7 @@ export default function Slider() {
     return (
         <Layout.Sider width="25%" style={siderStyle}>
           Sider
-          <Parser></Parser>
+          <Parser data={data}></Parser>
         </Layout.Sider>
     )
 }

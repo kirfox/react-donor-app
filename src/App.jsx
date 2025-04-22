@@ -3,17 +3,23 @@ import { Flex, Layout } from 'antd';
 import Header from './components/Header';
 import Slider from './components/Slider';
 import Content from './components/content';
+import Parser from './components/Parser';
+import { DonorContextProvider } from './context/donor-context';
 
 
 const App = () => (
-  <Flex >
-    <Layout>
-      <Header></Header>
+  <DonorContextProvider>
+
+  
+    <Flex >
       <Layout>
-        <Slider></Slider>
-        <Content></Content>
+        <Header></Header>
+        <Layout>
+          <Parser></Parser>
+          <Content></Content>
+        </Layout>
       </Layout>
-    </Layout>
-  </Flex>
+    </Flex>
+  </DonorContextProvider>
 );
 export default App;
