@@ -36,26 +36,27 @@ export function DonorContextProvider({children}) {
 
 
   function test(link) {
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get("http://localhost:3001/api/parse", {
-              params: {
-                url: "https://yadonor.ru" + link, // Укажите нужный URL
-              },
-            });
-    
-            setDept(response.data);
-          } catch (err) {
-            setError(err.message);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchData();
-      }, []);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/parse", {
+          params: {
+            url: "https://yadonor.ru" + link,
+          },
+        });
+
+        setDept(response.data);
+        console.log(dept);
+        
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+      
   }
 
   if (loading) return <div className="loading">Загрузка данных...</div>;

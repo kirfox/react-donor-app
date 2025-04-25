@@ -38,7 +38,6 @@ app.get('/api/parse', async (req, res) => {
 
     const nameOfDept = [];
     $('.maps-content__points-link').each((index, element) => {
-      console.log(element);
       
       nameOfDept.push({
         id: counter++,
@@ -46,6 +45,11 @@ app.get('/api/parse', async (req, res) => {
         link: $(element).find('a').attr('href'),
       });
     });
+
+    const donorTraficlighter = $('.spk-lights__group-item').map((i, el) => 
+      $(el).attr('class')?.match(/\bspk-lights__group-item--[\w-]*\b/g)
+    ).get().flat().filter(Boolean);
+
     // $('article').each((index, element) => {
     //   articles.push({
     //     title: $(element).find('h2').text().trim(),
@@ -59,6 +63,7 @@ app.get('/api/parse', async (req, res) => {
       success: true,
       url: targetUrl,
       nameOfDept,
+      donorTraficlighter,
       timestamp: new Date().toISOString()
     });
     

@@ -1,4 +1,3 @@
-// src/components/DataParser.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Layout, Menu, theme } from "antd";
@@ -15,15 +14,12 @@ const siderStyle = {
   scrollbarGutter: "stable",
 };
 
+
 const Parser = () => {
   const { data, test, dept } =  useDonor()
   
  
-
-  function name(link) {
-    test(link)
-  }
-  console.log(data);
+//   console.log(data);
   return (
     <Layout.Sider style={siderStyle} width={300}>
       <div className="demo-logo-vertical" />
@@ -35,13 +31,7 @@ const Parser = () => {
         items={data.nameOfDept.map((dept) => ({
           label: (
             <span
-              onClick={() => name(dept.link)}
-              style={{
-                // display: "inline-block",
-                //  whiteSpace: "normal",
-                //  wordBreak: "break-word",
-                //  overflow:'hidden'
-              }}
+              onClick={() => test(dept.link)}
             >
               {dept.name}
             </span>
