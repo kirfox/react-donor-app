@@ -3,3 +3,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.spk-lights__group-item--max {
+  background-color: green;
+}
+
+.spk-lights__group-item--min {
+  background-color: red;
+}
+
+.spk-lights__group-item--gray {
+  background-color: gray;
+}
+
+.spk-lights__group-item--middle {
+  background-color: yellow;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Layout } from 'antd';
 import Header from './components/Header';
 import Slider from './components/Slider';
-import Content from './components/content';
+import Content from './components/Content';
 import Parser from './components/Parser';
 import { DonorContextProvider } from './context/donor-context';
 
