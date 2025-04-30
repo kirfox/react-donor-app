@@ -34,7 +34,7 @@ app.get('/api/parse', async (req, res) => {
     const $ = cheerio.load(data);
     
     // 3. Извлекаем нужные данные (пример)
-    //const pageTitle = $('title').text();
+    const deptTitle = $('title').text();
 
     const nameOfDept = [];
     $('.maps-content__points-link').each((index, element) => {
@@ -63,6 +63,7 @@ app.get('/api/parse', async (req, res) => {
       success: true,
       url: targetUrl,
       nameOfDept,
+      deptTitle,
       donorTraficlighter,
       timestamp: new Date().toISOString()
     });

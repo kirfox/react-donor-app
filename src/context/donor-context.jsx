@@ -46,7 +46,7 @@ export function DonorContextProvider({children}) {
         });
 
         setDept(response.data);
-        console.log(dept);
+        //console.log(dept);
         
       } catch (err) {
         setError(err.message);

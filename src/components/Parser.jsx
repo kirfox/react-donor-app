@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Layout, Menu, theme } from "antd";
 import { useDonor } from "../context/donor-context";
+import Search from "antd/es/input/Search";
 
 const siderStyle = {
   overflow: "auto",
@@ -16,13 +17,14 @@ const siderStyle = {
 
 
 const Parser = () => {
-  const { data, test, dept } =  useDonor()
+  const { data, test } =  useDonor()
   
  
 //   console.log(data);
   return (
     <Layout.Sider style={siderStyle} width={300}>
       <div className="demo-logo-vertical" />
+      <Search placeholder="input search text" enterButton="Search" size="large" />
       <Menu
         theme="dark"
         mode="inline"

@@ -19,3 +19,12 @@
 .spk-lights__group-item--middle {
   background-color: yellow;
 }
+
+
+.spk-lights__group-item--middle,
+.spk-lights__group-item--gray,
+.spk-lights__group-item--min,
+.spk-lights__group-item--max
+ {
+  padding: 5px;
+}
