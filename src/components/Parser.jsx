@@ -17,29 +17,39 @@ const siderStyle = {
 
 
 const Parser = () => {
-  const { data, test } =  useDonor()
-  
+  const { data, fetchDepartmentData } =  useDonor()
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredDept = data.depts.filter(dept =>
+    Object.values(dept).some(
+      value => value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
  
 //   console.log(data);
   return (
     <Layout.Sider style={siderStyle} width={300}>
       <div className="demo-logo-vertical" />
-      <Search placeholder="input search text" enterButton="Search" size="large" />
+      <Search placeholder="input search text" size="large" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
       <Menu
         theme="dark"
         mode="inline"
         defaultSelectedKeys={["4"]}
         
-        items={data.nameOfDept.map((dept) => ({
+    
+        items={filteredDept.map((dept) => ({
           label: (
             <span
-              onClick={() => test(dept.link)}
+              onClick={() => fetchDepartmentData(dept.link)}
             >
               {dept.name}
             </span>
           ),
           key: dept.id,
         }))}
+        
+        
+        
       />
     </Layout.Sider>
   );

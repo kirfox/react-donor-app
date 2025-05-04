@@ -35,7 +35,7 @@ export function DonorContextProvider({children}) {
   }, []);
 
 
-  function test(link) {
+  function fetchDepartmentData(link) {
 
     const fetchData = async () => {
       try {
@@ -63,7 +63,7 @@ export function DonorContextProvider({children}) {
   if (error) return <div className="error">Ошибка: {error}</div>;
 
   return (
-    <DonorContext.Provider value={{ loading, data, test, dept  }}>
+    <DonorContext.Provider value={{ loading, data, fetchDepartmentData, dept  }}>
       {children}
     </DonorContext.Provider>
   ); 

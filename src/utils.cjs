@@ -36,10 +36,10 @@ app.get('/api/parse', async (req, res) => {
     // 3. Извлекаем нужные данные (пример)
     const deptTitle = $('title').text();
 
-    const nameOfDept = [];
+    const depts = [];
     $('.maps-content__points-link').each((index, element) => {
       
-      nameOfDept.push({
+      depts.push({
         id: counter++,
         name: $(element).find('a').text().trim(),
         link: $(element).find('a').attr('href'),
@@ -62,7 +62,7 @@ app.get('/api/parse', async (req, res) => {
     res.json({
       success: true,
       url: targetUrl,
-      nameOfDept,
+      depts,
       deptTitle,
       donorTraficlighter,
       timestamp: new Date().toISOString()
