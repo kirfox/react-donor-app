@@ -5,21 +5,23 @@ import Slider from './components/Slider';
 import Content from './components/Content';
 import Parser from './components/Parser';
 import { DonorContextProvider } from './context/donor-context';
+import Info from './components/Info';
 
 
 const App = () => (
-  <DonorContextProvider>
+  // <DonorContextProvider>
 
   
-    <Flex >
-      <Layout>
-        <Header></Header>
-        <Layout>
-          <Parser></Parser>
-          <Content></Content>
-        </Layout>
-      </Layout>
-    </Flex>
-  </DonorContextProvider>
+  //   <Flex >
+  //     <Layout>
+  //       <Header></Header>
+  //       <Layout>
+  //         <Parser></Parser>
+  //         <Content></Content>
+  //       </Layout>
+  //     </Layout>
+  //   </Flex>
+  // </DonorContextProvider>
+  <Info></Info>
 );
 export default App;
