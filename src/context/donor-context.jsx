@@ -86,7 +86,7 @@ export function DonorContextProvider({ children }) {
 */
 
   const parseMultipleUrls = async (urls) => {
-    setLoading(true);
+    // setLoading(true);
     setProgress(0);
 
     try {
@@ -102,33 +102,14 @@ export function DonorContextProvider({ children }) {
     } catch (error) {
       console.error("Parse error:", error);
       throw error;
-    } finally {
-      setLoading(false);
-    }
+    } 
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
   // Добавляем функцию для последовательного парсинга с прогрессом
-  const parseSequentially = async (urls) => {
-    setLoading(true);
-    setProgress(0);
-
-    const results = [];
-    for (let i = 0; i < urls.length; i++) {
-      try {
-        const response = await axios.get("http://localhost:3001/api/parse", {
-          params: { url: urls[i] },
-        });
-        results.push(response.data);
-      } catch (error) {
-        results.push({ error: error.message, url: urls[i] });
-      }
-      setProgress(Math.round(((i + 1) / urls.length) * 100));
-    }
-
-    setData(results);
-    setLoading(false);
-    return results;
-  };
+  
 
   if (loading) return <div className="loading">Загрузка данных...</div>;
   if (error) return <div className="error">Ошибка: {error}</div>;
@@ -140,8 +121,7 @@ export function DonorContextProvider({ children }) {
         data,
         deptPage,
         progress,
-        parseMultipleUrls,
-        parseSequentially,
+        parseMultipleUrls
       }}
     >
       {children}
