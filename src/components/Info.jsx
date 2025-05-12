@@ -7,12 +7,15 @@ import {
   Form,
   Input,
   Layout,
+  List,
   Menu,
   Select,
   Space,
 } from "antd";
 import Typography from "antd/es/typography/Typography";
 import { useDonor } from "../context/donor-context";
+import Title from "antd/es/typography/Title";
+import "../index.css";
 const { Option } = Select;
 const layout = {
   labelCol: { span: 8 },
@@ -32,7 +35,7 @@ const FormStyle = {
 
 const layoutStyle = {
   // minHeight: "100vh",
-  flexDirection: 'row'
+  flexDirection: "row",
 };
 
 const siderStyle = {
@@ -43,12 +46,26 @@ const siderStyle = {
 const siderItem = {
   // padding: 10,
   // fontSize: 12,
-  
-  minHeight: '100vh',
-  maxWidth: 400
-}
 
-const contentStyle = {};
+  minHeight: "100vh",
+  maxWidth: 400,
+};
+
+const contentStyle = {
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "100vh",
+  padding: '10px 50px',
+  justifyContent: "space-around",
+};
+
+const hintStyle = {
+  display: "flex",
+  marginRight: "5px",
+  width: "30px",
+  height: "20px",
+  border: "1px solid #d9d9d9",
+};
 
 export default function Info() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -163,6 +180,7 @@ export default function Info() {
       console.log(filteredResults);
 
       setSearchResults(filteredResults);
+      setDept(filteredResults[0].data);
     } catch (error) {
       console.error("Ошибка поиска:", error);
     } finally {
@@ -171,15 +189,11 @@ export default function Info() {
   };
 
   const showInfoDept = (dept) => {
-      console.log(dept);
-      
-  }
+    console.log(dept);
+  };
 
-
-   const item = searchResults.map((dept) => ({
-    label: (
-      <span onClick={() => setDept(dept.data)}>{dept.data.title}</span>
-    ),
+  const item = searchResults.map((dept) => ({
+    label: <span onClick={() => setDept(dept.data)}>{dept.data.title}</span>,
     key: dept.id,
   }));
 
@@ -248,18 +262,79 @@ export default function Info() {
         ) : (
           <Flex style={FormStyle}>
             <Layout style={layoutStyle}>
-              {/* <Layout.Sider width="25%" style={siderStyle}> */}
-                {/* {searchResults.map((item) => (
-                <Flex style={siderItem} key={item.id} >
-                  <h3>{item.data.title}</h3>
-                </Flex>
-                
-                ))} */}
-                <Menu style={siderItem}  theme="dark" mode="inline" defaultSelectedKeys={['4']} items={item} />
+            
+              <Menu 
+              
+                style={siderItem}
+                theme="dark"
+                mode="inline"
+                defaultSelectedKeys={["4"]}
+                items={item}
+                label='asdasasd'
+              /> 
               {/* </Layout.Sider> */}
               <Layout.Content style={contentStyle}>
-              
-               {dept.title}
+                <a href={dept.url} target="blank">
+                  <Title level={3}>{dept.title}</Title>
+                </a>
+
+                <Flex justify="space-around">
+                  {dept.donorTraficlighter.map((item) => (
+                    <Flex vertical>
+                      <h3 style={{ textAlign: "center" }}>{item.group}</h3>
+                      <Flex>
+                        <span className={item.rhesus[0]}>RH+</span>
+                        <span className={item.rhesus[1]}>RH-</span>
+                      </Flex>
+                    </Flex>
+                  ))}
+                </Flex>
+
+                <List
+                  bordered
+                  dataSource={[
+                    [
+                      "spk-lights__group-item--max",
+                      "- означает, что в учреждении имеется достаточный запас крови данной группы и резус-принадлежности и с визитом в Службу крови можно повременить.",
+                    ],
+                    [
+                      "spk-lights__group-item--middle",
+                      "- означает, что в учреждении присутствует потребность в крови данной группы и резус-принадлежности, рекомендуем запланировать визит для плановой донации.",
+                    ],
+                    [
+                      "spk-lights__group-item--min",
+                      "- означает, что в учреждении сложилась повышенная потребность в крови данной группы и резус-принадлежности, рекомендуем запланировать визит для плановой донации.",
+                    ],
+                  ]}
+                  renderItem={(item) => (
+                    <List.Item
+                      style={{ display: "flex", alignItems: "flex-start" }}
+                    >
+            
+                      <Typography.Text>
+                        <Flex className={item[0]} style={hintStyle}></Flex>
+                      </Typography.Text>{" "}
+                      {item[1]}
+                    </List.Item>
+                  )}
+                />
+
+                <List split={false}
+                  dataSource={[
+                    'Адрес: ' + dept.address,
+                    'Телефон: ' + dept.phone,
+                    'Рабочее время: ' + dept.workHours
+                  ]}
+                  renderItem={(item) => (
+                    <List.Item
+                      style={{ display: "flex", alignItems: "flex-start" }}
+                    >
+            
+                      {item}
+                      
+                    </List.Item>
+                  )}
+                />
               </Layout.Content>
             </Layout>
           </Flex>

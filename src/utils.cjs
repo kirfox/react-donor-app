@@ -147,7 +147,10 @@ async function parseSingleUrl(url) {
           $(el).attr('class')?.match(/\bspk-lights__group-item--[\w-]*\b/g)
         ).get().flat().filter(Boolean)
       })).get(),
-      url: url
+      url: url,
+      address: $('.spk-box__elem-content-item:contains("Адрес:")').text().replace('Адрес:', '').trim(),
+      phone: $('.spk-box__elem-content-item:contains("Телефон:")').first().text().replace('Телефон:', '').trim(),
+      workHours: $('.spk-box__elem-content-item:contains("Время работы:")').text().replace('Время работы:', '').trim()
     };
     
     return { success: true, url, data: parsedData };
