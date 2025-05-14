@@ -5,11 +5,11 @@
 }
 
 .spk-lights__group-item--max {
-  background-color: green;
+  background-color: #00c946;
 }
 
 .spk-lights__group-item--min {
-  background-color: red;
+  background-color: #e9392c;
 }
 
 .spk-lights__group-item--gray {
@@ -17,14 +17,12 @@
 }
 
 .spk-lights__group-item--middle {
-  background-color: yellow;
+  background-color: #fbbf27;
 }
-
 
 .spk-lights__group-item--middle,
 .spk-lights__group-item--gray,
 .spk-lights__group-item--min,
-.spk-lights__group-item--max
- {
-  padding: 5px;
+.spk-lights__group-item--max {
+  padding: 5px 10px;
 }

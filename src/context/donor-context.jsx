@@ -3,22 +3,21 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const DonorContext = createContext({
   data: [],
-  loading: true,
 });
 
 export function DonorContextProvider({ children }) {
   const [deptPage, setDeptPage] = useState(null);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/api/parse", {
           params: {
-            url: "https://yadonor.ru/donorstvo/gde-sdat/where/", // Укажите нужный URL
+            url: "https://yadonor.ru/donorstvo/gde-sdat/where/",
           },
         });
 
@@ -26,69 +25,13 @@ export function DonorContextProvider({ children }) {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  /*
-  function fetchDepartmentData(link) {
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/api/parse", {
-          params: {
-            url: "https://yadonor.ru" + link,
-          },
-        });
-
-        setDept(response.data);
-        //console.log(dept);
-        
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-      
-  }
-
-  function fetchDepartmentsData(link) {
-    
-    console.log(link);
-    
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/api/parse", {
-          params: {
-            url: "https://yadonor.ru" + link[1],
-          },
-        });
-
-        setDept(response.data);
-        //console.log(dept);
-        
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-      
-  }
-*/
-
   const parseMultipleUrls = async (urls) => {
-    // setLoading(true);
-    setProgress(0);
-
     try {
       const response = await axios.get(
         "http://localhost:3001/api/parse-multiple",
@@ -102,26 +45,21 @@ export function DonorContextProvider({ children }) {
     } catch (error) {
       console.error("Parse error:", error);
       throw error;
-    } 
-    // finally {
-    //   setLoading(false);
-    // }
+    }
   };
 
-  // Добавляем функцию для последовательного парсинга с прогрессом
-  
-
-  if (loading) return <div className="loading">Загрузка данных...</div>;
   if (error) return <div className="error">Ошибка: {error}</div>;
 
   return (
     <DonorContext.Provider
       value={{
-        loading,
         data,
         deptPage,
-        progress,
-        parseMultipleUrls
+        parseMultipleUrls,
+        searchResults,
+        isSearching,
+        setSearchResults,
+        setIsSearching,
       }}
     >
       {children}
