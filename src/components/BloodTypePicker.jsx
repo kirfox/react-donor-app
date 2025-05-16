@@ -16,8 +16,12 @@ const FormStyle = {
   minHeight: "100vh",
   justifyContent: "center",
 };
+
+
 export default function BloodTypePicker() {
   const [form] = Form.useForm();
+
+  
 
   const {
     deptPage,

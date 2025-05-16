@@ -42,7 +42,6 @@ export default function Dept({ searchResults }) {
   const [isHover, setIsHover] = useState(false);
 
   const linkStyle = {
-    color: 'black',
     color: isHover ? 'grey' : 'black'
     
    };
