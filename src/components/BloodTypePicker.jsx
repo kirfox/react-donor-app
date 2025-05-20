@@ -13,7 +13,7 @@ const FormStyle = {
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
-  minHeight: "100vh",
+  // minHeight: "100vh",
   justifyContent: "center",
 };
 

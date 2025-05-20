@@ -8,10 +8,10 @@ const App = () => (
   
    <DonorContextProvider>
     
-    {/* <Info></Info>   */}
-    <YMaps query={{apikey: import.meta.env.VITE_API_KEY}}>
+    <Info></Info>  
+    {/* <YMaps query={{apikey: import.meta.env.VITE_API_KEY}}> 
       <MapComponent></MapComponent>
-    </YMaps>
+    </YMaps> */}
   </DonorContextProvider> 
   
 
