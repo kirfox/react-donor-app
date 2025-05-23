@@ -10,22 +10,22 @@ export default function Info() {
   const { searchResults, isSearching } = useDonor();
   
   return (
-    <div>
+    <div  style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       {/* {searchResults.length === 0 || isSearching ? (
         <BloodTypePicker></BloodTypePicker>
       ) : (
         <Dept searchResults={searchResults}></Dept>
       )} */}
 
-    {searchResults.length === 0 || isSearching ? (
+    {/* {searchResults.length === 0 || isSearching ? (
         <BloodTypePicker></BloodTypePicker>
       ) : (
-          // <YMaps query={{apikey: import.meta.env.VITE_API_KEY}}> 
+          
             <MapComponent searchResults={searchResults}></MapComponent>
-          // </YMaps>
-      )}
-     
-    
+         
+      )} */}
+     <BloodTypePicker></BloodTypePicker>
+     {searchResults.length !== 0 ? (<MapComponent  searchResults={searchResults}></MapComponent>): <></>}
           
     </div>
   );

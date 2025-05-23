@@ -72,7 +72,7 @@ export default function BloodTypePicker() {
     } catch (error) {
       console.error("Ошибка поиска:", error);
     } finally {
-      setIsSearching(false);
+      //setIsSearching(false);
     }
   };
 
