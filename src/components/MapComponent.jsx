@@ -5,7 +5,7 @@ import { useDonor } from "../context/donor-context";
 const Geocoder = ({ searchResults, onGeocodeComplete }) => {
   const ymaps = useYMaps(["geocode"]);
   const [progress, setProgress] = useState(0);
-  
+
   const addresses = searchResults.map(
     (dept) => "г. Москва, " + dept.data.address.split("\n")[0].trim()
   );
@@ -48,20 +48,17 @@ const Geocoder = ({ searchResults, onGeocodeComplete }) => {
     };
 
     geocodeAll();
-    
   }, [ymaps, searchResults, onGeocodeComplete]);
-
-  // return <div>Прогресс: {Math.round(progress)}%</div>;
 };
 
 export default function MapComponent({ searchResults }) {
   const [coordinates, setCoordinates] = useState([]);
-const {setIsSearching} = useDonor()
+  const { setIsSearching } = useDonor();
   return (
     <YMaps
       query={{ apikey: import.meta.env.VITE_API_KEY, load: "package.full" }}
     >
-      <div style={{ width: '80%', height: '60vh'}}>
+      <div style={{ width: "80%", height: "60vh" }}>
         {coordinates.length === 0 ? (
           <Geocoder
             searchResults={searchResults}
@@ -77,16 +74,13 @@ const {setIsSearching} = useDonor()
             height="100%"
           >
             {coordinates.map((item, index) => {
-              setIsSearching(false)
+              setIsSearching(false);
               return (
                 <Placemark
                   key={index}
                   geometry={item.coords}
                   properties={{
-                    balloonContent: `
-                    <a href="${item.url}" target='blank'>${item.name}</a>
-                   
-                  `,
+                    balloonContent: `<a href="${item.url}" target='blank'>${item.name}</a>`,
                     hintContent: item.name,
                   }}
                   options={{
@@ -101,7 +95,5 @@ const {setIsSearching} = useDonor()
         )}
       </div>
     </YMaps>
-   
   );
-  
 }

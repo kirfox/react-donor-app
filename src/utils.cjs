@@ -1,29 +1,26 @@
 const express = require("express");
-const axios = require("axios"); // Для HTTP-запросов
-const cheerio = require("cheerio"); // Для парсинга HTML
-const cors = require("cors"); // Для обработки CORS
+const axios = require("axios");
+const cheerio = require("cheerio");
+const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = 3001;
 let counter = 0;
-// Включение CORS для всех запросов
+
 app.use(cors());
 
 const limiter = rateLimit({
-  windowMs: 60 * 1000, // 1 минута
+  windowMs: 60 * 1000,
   max: 10,
   message: "Слишком много запросов. Пожалуйста, подождите.",
 });
 
 app.use("/api/parse", limiter);
-// Маршрут для парсинга
 app.get("/api/parse", async (req, res) => {
   try {
-    // Получаем URL из параметров запроса
     const targetUrl = req.query.url || "https://example.com";
 
-    // 1. Загружаем HTML с целевого сайта
     const { data } = await axios.get(targetUrl, {
       headers: {
         "User-Agent":
@@ -31,18 +28,12 @@ app.get("/api/parse", async (req, res) => {
       },
     });
 
-    // 2. Загружаем HTML в Cheerio
     const $ = cheerio.load(data);
-
-    // 3. Извлекаем нужные данные (пример)
-    // const deptTitle = $('title').text();
-
-    const links = []; //link
+    const links = [];
     $(".maps-content__points-link").each((index, element) => {
       links.push("https://yadonor.ru" + $(element).find("a").attr("href"));
     });
 
-    // 4. Отправляем структурированные данные клиенту
     res.json({
       success: true,
       url: targetUrl,
@@ -61,13 +52,10 @@ app.get("/api/parse", async (req, res) => {
 // Добавляем новый эндпоинт для массового парсинга
 app.get("/api/parse-multiple", async (req, res) => {
   try {
-    const urls = JSON.parse(req.query.urls); // Получаем массив URL
-
-    // Ограничиваем количество параллельных запросов
+    const urls = JSON.parse(req.query.urls);
     const MAX_CONCURRENT = 5;
     const results = [];
 
-    // Разбиваем на группы по MAX_CONCURRENT
     for (let i = 0; i < urls.length; i += MAX_CONCURRENT) {
       const chunk = urls.slice(i, i + MAX_CONCURRENT);
       const chunkResults = await Promise.all(chunk.map(parseSingleUrl));
@@ -85,7 +73,6 @@ app.get("/api/parse-multiple", async (req, res) => {
   }
 });
 
-// Выносим логику парсинга в отдельную функцию
 async function parseSingleUrl(url) {
   try {
     const { data } = await axios.get(url, {
@@ -93,8 +80,6 @@ async function parseSingleUrl(url) {
     });
 
     const $ = cheerio.load(data);
-
-    // Ваша логика парсинга
     const parsedData = {
       title: $("title").text(),
       donorTraficlighter: $(".spk-lights__item")
@@ -117,25 +102,13 @@ async function parseSingleUrl(url) {
         .text()
         .replace("Адрес:", "")
         .trim(),
-      phone: $('.spk-box__elem-content-item:contains("Телефон:")')
-        .first()
-        .text()
-        .replace("Телефон:", "")
-        .trim(),
-      workHours: $('.spk-box__elem-content-item:contains("Время работы:")')
-        .text()
-        .replace("Время работы:", "")
-        .trim(),
     };
-
     return { success: true, url, data: parsedData };
-    // return parsedData
   } catch (error) {
     return { success: false, url, error: error.message };
   }
 }
 
-// Запуск сервера
 app.listen(PORT, () => {
   console.log(`Прокси-сервер для парсинга запущен на http://localhost:${PORT}`);
 });

@@ -13,15 +13,11 @@ const FormStyle = {
   display: "flex",
   alignItems: "center",
   flexDirection: "column",
-  // minHeight: "100vh",
   justifyContent: "center",
 };
 
-
 export default function BloodTypePicker() {
   const [form] = Form.useForm();
-
-  
 
   const {
     deptPage,
@@ -40,17 +36,14 @@ export default function BloodTypePicker() {
     try {
       const results = await parseMultipleUrls(deptPage.links);
       const filteredResults = results.filter((item) => {
-        // Проверяем, что данные успешно получены
 
         if (!item.success || !item.data || !item.data.donorTraficlighter)
           return false;
 
-        // Ищем группу крови "A (II)"
         const bloodGroup = item.data.donorTraficlighter.find((group) =>
           group.group.includes(formValues.groupOfBlood)
         );
 
-        // Проверяем условия
         if (!bloodGroup) return false;
         if (!bloodGroup.rhesus) return false;
         if (
@@ -71,9 +64,7 @@ export default function BloodTypePicker() {
       setSearchResults(filteredResults);
     } catch (error) {
       console.error("Ошибка поиска:", error);
-    } finally {
-      //setIsSearching(false);
-    }
+    } 
   };
 
   return (
@@ -110,7 +101,12 @@ export default function BloodTypePicker() {
         </Form.Item>
         <Form.Item {...tailLayout}>
           <Space>
-            <Button type="primary" htmlType="submit" loading={isSearching}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isSearching}
+              onClick={() => setSearchResults([])}
+            >
               {isSearching ? "Идет поиск..." : "Поиск"}
             </Button>
             <Button htmlType="button" onClick={onReset}>
